@@ -2,6 +2,8 @@ import spotipy
 import spotipy.util as util
 import os
 import sys
+from dotenv import load_dotenv
+load_dotenv()
 
 
 token = ''
@@ -99,7 +101,8 @@ def main():
             active_device_id = get_get_active_device_id()
 
             set_active_song(track_uri, active_device_id)
-
+        else:
+            print("No trackname provided")
 
 if __name__ == '__main__':
     main()

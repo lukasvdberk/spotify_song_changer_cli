@@ -20,11 +20,12 @@ pipenv shell
 
 **Note**
 
-Fill in the variables in the example-env file.
+Fill in the variables in the .example-env file.
 Client id and secret come from the spotify api. 
 Make sure when creating an application on the spotify developer platform that redirect url is http://locahost:8080.
+When you filed in the information in the .example-env file rename it to .env
 
 Then run with 
 ```bash
-source .example-env python app.py
+python app.py
 ```
