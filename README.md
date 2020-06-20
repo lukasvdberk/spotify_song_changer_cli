@@ -1,6 +1,5 @@
 
 ### About
-# spotify_song_changer_cli
 An terminal based application for switching songs on spotify (really nice for i3wm)
 
 ### Installation
