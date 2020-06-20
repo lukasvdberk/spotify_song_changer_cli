@@ -3,12 +3,30 @@ import spotipy.util as util
 import os
 import sys
 from dotenv import load_dotenv
+import argparse
 
 # Searches for a file with .env make sure its set with the values from .example-env
 load_dotenv()
 
 
 token = ''
+
+def get_help():
+    """
+    Returns the help message.
+    """
+    return """
+        This program is to change to a different song on spotify via the terminal.
+
+        Use it like this
+
+        python app.py name of your track
+
+        example usage:
+
+        python app.py Master of Puppets
+        """
+
 def get_username():
     return os.getenv('USERNAME')
 
@@ -96,7 +114,6 @@ def set_active_song(track_spotify_uri:str, device_id:str):
 
 def main():
         user_input = retrive_song_from_input()
-
         if user_input:
             track_uri = get_song_uri(user_input)
 
@@ -104,7 +121,8 @@ def main():
 
             set_active_song(track_uri, active_device_id)
         else:
-            print("No trackname provided")
+            print("No trackname provided. This is the help mesage to get you in the right direction")
+            print(get_help)
 
 if __name__ == '__main__':
     main()
