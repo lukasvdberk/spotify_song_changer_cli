@@ -4,14 +4,14 @@ import os
 import sys
 
 
-
+token = ''
 def get_username():
     return os.getenv('USERNAME')
 
 def get_token():
     global token
     if not token:
-        scope = 'playlist-read-private'
+        scope = 'user-read-playback-state user-modify-playback-state'
 
         token = util.prompt_for_user_token(
             get_username(), 
@@ -25,6 +25,11 @@ def get_token():
         return token
     else: 
         raise Exception('Could not get user-token. Make you set them in the .env file')
+
+
+def get_spotify_client():
+    return spotipy.Spotify(auth=get_token())
+
 
 def retrive_song_from_input():
     """
@@ -43,29 +48,58 @@ def get_song_uri(track_name:str):
     @param track_name The name of the track you wish to retive the uri from. 
     @return str. The song uri coming from spotify. 
     """
-    pass
+    sp = get_spotify_client()
+    track_result = sp.search(q=track_name, type='track', limit=1)
+
+    try:
+        return track_result["tracks"]["items"][0]["uri"]
+    except:
+        # TODO add helpfull error message maybe with i3 message.
+        print("Could not find the specified track")
+        exit()
 
 
 def get_get_active_device_id():
     """
     @return str. The id of the spotify client device that is currently active. 
     """
-    pass
+    sp = get_spotify_client()
+    devices = sp.devices()["devices"]
+    try:
+        active_devices = list(filter(lambda device: device["is_active"], devices))
+        return active_devices[0]["id"]
+    except:
+        print("Could not get devices")
+        exit()
 
 def set_active_song(track_spotify_uri:str, device_id:str):
     """
     Sets the current active song on a given device.
-    @return str. The id of the spotify client device that is currently active. 
+    @return bool. If there was a succes. 
     """
-    pass
-
+    sp = get_spotify_client()
+    try:
+        sp.start_playback(
+            uris=[track_spotify_uri], 
+            offset={
+                "position": 0
+            }, 
+            device_id=device_id
+        )
+        return True
+    except:
+        return False
 
 def main():
-        # FLOW
-        # reads input
-        # searches for songs on spotify
-        # searches for available devices
-        # play song on active client
         user_input = retrive_song_from_input()
+
+        if user_input:
+            track_uri = get_song_uri(user_input)
+
+            active_device_id = get_get_active_device_id()
+
+            set_active_song(track_uri, active_device_id)
+
+
 if __name__ == '__main__':
     main()
