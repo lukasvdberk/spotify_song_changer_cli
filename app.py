@@ -3,6 +3,8 @@ import spotipy.util as util
 import os
 import sys
 from dotenv import load_dotenv
+
+# Searches for a file with .env make sure its set with the values from .example-env
 load_dotenv()
 
 
@@ -39,7 +41,7 @@ def retrive_song_from_input():
     """
     # sp = spotipy.Spotify(auth=get_token())
     try:
-        return str(sys.argv[1])
+        return str(sys.argv[1:])
     except:
         # TODO replace with help options
         exit()
