@@ -18,7 +18,7 @@ First activate the shell
 pipenv shell
 ```
 
-**Note**
+**Note**\n
 Fill in the variables in the example-env file.
 Client id and secret come from the spotify api. 
 Make sure when creating an application on the spotify developer platform that redirect url is http://locahost:8080.
