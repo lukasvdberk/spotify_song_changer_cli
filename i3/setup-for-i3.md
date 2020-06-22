@@ -11,11 +11,11 @@ Type=Application
 Name=sp
 GenericName=sp
 Comment=Changes sets a new song for spotify
-Exec=/usr/bin/python3 "/home/lukas/Documents/Programming Projects/change_song_spotify/app.py" master o>
+Exec=sh -c '/usr/bin/python3 "/home/lukas/Documents/Programming Projects/change_song_spotify/app.py" %F'
 Terminal=true
 StartupNotify=true
 Categories=Music;
 Keywords=sp;
 ```
 
-Replace the Exec with your python path and the path of the file to where you downloaded the app.yp
+Replace the Exec with your python path and the path of the file to where you downloaded the app.py
